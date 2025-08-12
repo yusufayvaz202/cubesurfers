@@ -43,7 +43,6 @@ namespace Player
         private void OnMove(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
-            Debug.Log($"Move Input: {_moveInput}");
         }
         
         #endregion
