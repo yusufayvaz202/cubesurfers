@@ -8,6 +8,7 @@ namespace Player
     {
         [Header("Player Scripts References")] 
         private PlayerMovementController _playerMovementController;
+        private PlayerAnimationController _playerAnimationController;
 
         [Header("Other References")]
         [SerializeField] private Transform _baseCubeTransform;
@@ -17,6 +18,7 @@ namespace Player
         private void Awake()
         {
             _playerMovementController = GetComponent<PlayerMovementController>();
+            _playerAnimationController = GetComponent<PlayerAnimationController>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -42,8 +44,9 @@ namespace Player
         private void CubeCollectibleCollected(ICollectible collectible)
         {
             collectible.Collect(_baseCubeTransform);
-            // Set player transform to up
+            // Set player transform to up and animate jump
             _playerMovementController.SetYPosition(_baseCubeTransform.localScale.y);
+            _playerAnimationController.PlayJumpAnimation();
         }
 
         #endregion

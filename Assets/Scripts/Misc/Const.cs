@@ -6,5 +6,10 @@
         {
             public const string MOVE = "Move";
         }
+        
+        public struct Animatons
+        {
+            public const string JUMP = "Jump";
+        }
     }
 }
