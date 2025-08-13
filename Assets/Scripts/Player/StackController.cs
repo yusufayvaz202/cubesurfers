@@ -7,13 +7,14 @@ namespace Player
     public class StackController : MonoBehaviour
     {
         [Header("Settings")]
-        public List<GameObject> _stackObjects = new();
-        private GameObject _lastBlockObject;
+        [SerializeField]private GameObject _lastBlockObject;
+        private List<GameObject> _stackObjects = new();
 
         #region Unity Methodss
 
         private void Start()
         {
+            _stackObjects.Add(_lastBlockObject);
             UpdateLastBlockObject();
         }
 

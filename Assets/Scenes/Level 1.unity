@@ -1908,7 +1908,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _horizontalSpeed: 10
-  _verticalSpeed: 5
+  _forwardSpeed: 5
+  _horizontalLimit: 3
 --- !u!54 &3469287837424391050
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1917,7 +1918,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149255030424}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1961,8 +1962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84172cdc430b77d49b027c5969feb0e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stackObjects:
-  - {fileID: 919132149255030424}
+  _lastBlockObject: {fileID: 919132149255030424}
 --- !u!4 &3485272648715916253
 Transform:
   m_ObjectHideFlags: 0

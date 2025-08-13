@@ -10,7 +10,7 @@ namespace Cube
 
         [Header("Cube Properties")] 
         private Vector3 _rayDirection;
-        private float _rayDistance = 0.1f;
+        private float _rayDistance = 0.5f;
         private bool _isStacked;
         private bool _isHit;
 

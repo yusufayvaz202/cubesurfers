@@ -9,7 +9,10 @@ namespace Player
 
         [Header("Settings")]
         [SerializeField] private float _horizontalSpeed = 5f;
-        [SerializeField] private float _verticalSpeed = 5f;
+        [SerializeField] private float _forwardSpeed = 5f;
+        [SerializeField] private float _horizontalLimit = 3f;
+
+        private float newPositionX;
         
         #region Unity Methods
 
@@ -20,18 +23,23 @@ namespace Player
 
         private void FixedUpdate()
         {
-            MovePlayer();
+            SetForwardMovement();
+            SetHorizontalMovement();
         }
 
         #endregion
         
-        private void MovePlayer()
+        private void SetForwardMovement()
         {
-            Vector2 moveInput = _inputController.MoveInput.normalized;
-            Vector3 moveVector = new Vector3(moveInput.x * _horizontalSpeed, 0, _verticalSpeed);
-            
-            transform.Translate( moveVector * Time.fixedDeltaTime);
-            //_rigidbody.MovePosition(_rigidbody.position + moveVector * Time.fixedDeltaTime);
+            transform.Translate(Vector3.forward * (_forwardSpeed * Time.fixedDeltaTime));
+        }
+
+
+        private void SetHorizontalMovement()
+        {
+            newPositionX = transform.position.x + _inputController.MoveInput.x * _horizontalSpeed * Time.fixedDeltaTime;
+            newPositionX = Mathf.Clamp(newPositionX, -_horizontalLimit, _horizontalLimit);
+            transform.position = new Vector3(newPositionX, transform.position.y, transform.position.z);
         }
         
     }
