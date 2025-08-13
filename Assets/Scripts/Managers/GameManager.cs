@@ -6,6 +6,9 @@ namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
+        [Header("Singleton")]
+        public static GameManager Instance;
+        
         [Header("References")]
         [SerializeField] private GemUI _gemUI;
         
@@ -14,6 +17,18 @@ namespace Managers
         private int _gemCount;
         
         #region Unity Methods
+
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
 
         private void Start()
         {
@@ -38,10 +53,11 @@ namespace Managers
             _gemUI.UpdateGemCountText(_gemCount);
         }
 
-        private void ChangeGameState(GameState newGameState)
+        public void ChangeGameState(GameState newGameState)
         {
             _currentGameState = newGameState;
             EventManager.OnGameStateChanged?.Invoke(_currentGameState);
+            Debug.Log("Current Game State: " + _currentGameState);
         }
         
     }

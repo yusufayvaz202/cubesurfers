@@ -9,13 +9,16 @@ namespace Gem
 
         private void OnTriggerEnter(Collider other)
         {
-            // TODO: Can used object pooling and can make some particle effect instead of destroy.
-            EventManager.OnGemCollected?.Invoke();
-            Destroy(gameObject);
+            CollectGem();
         }
 
         #endregion
         
-        
+        private void CollectGem()
+        {
+            // TODO: Can used object pooling and can make some particle effect instead of destroy.
+            EventManager.OnGemCollected?.Invoke();
+            Destroy(gameObject);
+        }
     }
 }

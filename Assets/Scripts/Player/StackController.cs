@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
+using Managers;
+using Misc;
 using UnityEngine;
 
 namespace Player
@@ -7,7 +9,7 @@ namespace Player
     public class StackController : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField]private GameObject _lastBlockObject;
+        [SerializeField] private GameObject _lastBlockObject;
         private List<GameObject> _stackObjects = new();
 
         #region Unity Methodss
@@ -20,14 +22,14 @@ namespace Player
 
         private void OnEnable()
         {
-            Managers.EventManager.OnIncreaseRaycastHit += IncreaseNewBlock;
-            Managers.EventManager.OnDecreaseRaycastHit += DecreaseBlock;
+            EventManager.OnIncreaseRaycastHit += IncreaseNewBlock;
+            EventManager.OnDecreaseRaycastHit += DecreaseBlock;
         }
         
         private void OnDisable()
         {
-            Managers.EventManager.OnIncreaseRaycastHit -= IncreaseNewBlock;
-            Managers.EventManager.OnDecreaseRaycastHit -= DecreaseBlock;
+            EventManager.OnIncreaseRaycastHit -= IncreaseNewBlock;
+            EventManager.OnDecreaseRaycastHit -= DecreaseBlock;
         }
 
         #endregion
@@ -44,13 +46,18 @@ namespace Player
             UpdateLastBlockObject();
         }
 
-
         private void DecreaseBlock(GameObject cube)
         {
             cube.transform.parent = null;
             
             _stackObjects.Remove(cube);
             UpdateLastBlockObject();
+            
+            if (_stackObjects.Count < 1)
+            {
+                // if the stack counter less than 1 you LOSE the game. 
+                GameManager.Instance.ChangeGameState(GameState.Lose);
+            }
         }
 
         #endregion
@@ -59,6 +66,7 @@ namespace Player
 
         private void UpdateLastBlockObject()
         {
+            if (_stackObjects.Count == 0) return;
             _lastBlockObject = _stackObjects[^1];
         }
 

@@ -1,3 +1,4 @@
+using Managers;
 using Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,7 +15,7 @@ namespace Player
         
         [Header("Settings")]
         private Vector2 _moveInput;
-        
+        private bool _isFirstAction = true;
         public Vector2 MoveInput => _moveInput;
 
         #region Unity Methods
@@ -42,6 +43,12 @@ namespace Player
         
         private void OnMove(InputAction.CallbackContext context)
         {
+            if (_isFirstAction)
+            {
+                GameManager.Instance.ChangeGameState(GameState.Playing);
+                _isFirstAction = false;
+            }
+            
             _moveInput = context.ReadValue<Vector2>();
         }
         
