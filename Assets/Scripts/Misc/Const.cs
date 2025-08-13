@@ -7,7 +7,7 @@
             public const string MOVE = "Move";
         }
         
-        public struct Animatons
+        public struct Animations
         {
             public const string JUMP = "Jump";
         }

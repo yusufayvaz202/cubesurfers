@@ -5,19 +5,20 @@ namespace Cube
 {
     public class Cube : MonoBehaviour
     {
-        [Header("References")]
+        [Header("References")] 
         private Collider _collider;
-        
-        [Header("Cube Properties")]
+
+        [Header("Cube Properties")] 
         private Vector3 _rayDirection;
-        private float _rayDistance;
+        private float _rayDistance = 0.1f;
         private bool _isStacked;
         private bool _isHit;
 
-        [Header("Raycast Settings")]
-        RaycastHit _hits;
+        [Header("Raycast Settings")] 
         private float _rayScale = 1f;
-    
+        
+        public LayerMask _layerMask;
+
         private void Awake()
         {
             _collider = GetComponent<Collider>();
@@ -27,13 +28,13 @@ namespace Cube
 
         private void FixedUpdate()
         {
-            _isHit = Physics.BoxCast(_collider.bounds.center + Vector3.up, transform.localScale * _rayScale, _rayDirection, out _hits, transform.rotation, _rayDistance);
-
+            _isHit = Physics.BoxCast(_collider.bounds.center + Vector3.up, transform.localScale * _rayScale, _rayDirection, out _, transform.rotation, _rayDistance, _layerMask);
             switch (_isHit)
             {
                 case true when !_isStacked:
                     _isStacked = true;
                     SetDirection();
+                    SetLayerToDefault();
                     EventManager.OnIncreaseRaycastHit?.Invoke(gameObject);
                     break;
                 case true when _isStacked:
@@ -46,6 +47,10 @@ namespace Cube
         {
             _rayDirection = Vector3.forward;
         }
-    
+
+        private void SetLayerToDefault()
+        {
+            gameObject.layer = 0;
+        }
     }
 }
