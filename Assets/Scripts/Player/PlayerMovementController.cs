@@ -6,7 +6,6 @@ namespace Player
     {
         [Header("References")]
         private PlayerInputController _inputController;
-        private Rigidbody _rigidbody;
 
         [Header("Settings")]
         [SerializeField] private float _horizontalSpeed = 5f;
@@ -17,7 +16,6 @@ namespace Player
         private void Awake()
         {
             _inputController = GetComponent<PlayerInputController>();
-            _rigidbody = GetComponent<Rigidbody>();
         }
 
         private void FixedUpdate()
@@ -32,7 +30,8 @@ namespace Player
             Vector2 moveInput = _inputController.MoveInput.normalized;
             Vector3 moveVector = new Vector3(moveInput.x * _horizontalSpeed, 0, _verticalSpeed);
             
-            _rigidbody.MovePosition(_rigidbody.position + moveVector * Time.fixedDeltaTime);
+            transform.Translate( moveVector * Time.fixedDeltaTime);
+            //_rigidbody.MovePosition(_rigidbody.position + moveVector * Time.fixedDeltaTime);
         }
         
     }
