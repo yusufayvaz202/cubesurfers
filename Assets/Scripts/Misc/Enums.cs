@@ -1,7 +1,12 @@
 ﻿namespace Misc
 {
-    public enum CollectibleType
+    public enum GameState
     {
-        Cube,
+        Waiting,
+        Playing,
+        Paused,
+        Win,
+        Lose,
     }
+    
 }
