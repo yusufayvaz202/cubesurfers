@@ -16,7 +16,7 @@ namespace Cube
 
         [Header("Raycast Settings")]
         RaycastHit _hits;
-        private float _rayScale = 0.7f;
+        private float _rayScale = 1f;
     
         private void Awake()
         {

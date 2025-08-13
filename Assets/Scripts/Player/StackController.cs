@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Player
@@ -34,7 +35,7 @@ namespace Player
 
         private void IncreaseNewBlock(GameObject cube)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+            transform.DOMoveY(transform.position.y + 1f, .5f).SetEase(Ease.OutBack);
             cube.transform.position = new Vector3(transform.position.x, _lastBlockObject.transform.position.y - 1f, transform.position.z);
             cube.transform.SetParent(transform);
             
