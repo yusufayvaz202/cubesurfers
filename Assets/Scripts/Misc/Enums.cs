@@ -8,5 +8,11 @@
         Win,
         Lose,
     }
+
+    public enum PlayerStates
+    {
+        NormalMode,
+        MagnetMode
+    }
     
 }

@@ -1,7 +1,7 @@
 ﻿using Managers;
 using UnityEngine;
 
-namespace Gem
+namespace Collectibles
 {
     public class Gem : MonoBehaviour
     {
