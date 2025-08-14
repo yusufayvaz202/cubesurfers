@@ -63,8 +63,8 @@ namespace Cube
             switch (_isHit)
             {
                 case true when !_isStacked:
-                    _isStacked = true;
                     SetRayScale(1f);
+                    _isStacked = true;
                     SetDirection();
                     SetLayerToDefault();
                     EventManager.OnIncreaseRaycastHit?.Invoke(gameObject);
@@ -87,6 +87,7 @@ namespace Cube
 
         private void SetRayScale(float scale)
         {
+            if (_isStacked) return;
             _cubeScale.x = scale;
         }
 
