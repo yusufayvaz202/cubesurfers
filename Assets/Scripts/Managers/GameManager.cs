@@ -57,6 +57,7 @@ namespace Managers
 
         public void ChangeGameState(GameState newGameState)
         {
+            if(_currentGameState == newGameState) return;  
             _currentGameState = newGameState;
             EventManager.OnGameStateChanged?.Invoke(_currentGameState);
             Debug.Log("Current Game State: " + _currentGameState);
@@ -74,9 +75,16 @@ namespace Managers
         public void CalculateBonusMultiplier(int bonusMultiplier)
         {
             _bonusMultiplier = bonusMultiplier;
+            _winLoseUI.SetGemMultiplierText(_bonusMultiplier);
             Debug.Log("Bonus: " +_bonusMultiplier);
         }
 
+        public void BonusMultiplierAnimationEnd()
+        {
+            _gemCount *= _bonusMultiplier;
+            _gemUI.UpdateGemCountText(_gemCount);
+        }
+        
         private void WinState()
         {
             _winLoseUI.OnGameWin();

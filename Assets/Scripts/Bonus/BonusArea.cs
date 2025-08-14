@@ -1,5 +1,4 @@
-﻿using System;
-using Managers;
+﻿using Managers;
 using Misc;
 using UnityEngine;
 
@@ -15,16 +14,14 @@ namespace Bonus
         {
             if (!_isBonusStarted)
             {
-                Debug.Log("OnTriggerEnter : " + other.gameObject.name);
+                _isBonusStarted = true;
                 EventManager.OnBonusAreaEntered?.Invoke();
-            }
-            else
-            {
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
+            if (!_isBonusStarted) return;
             GameManager.Instance.ChangeGameState(GameState.Win);
         }
 
