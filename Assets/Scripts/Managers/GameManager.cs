@@ -11,10 +11,12 @@ namespace Managers
         
         [Header("References")]
         [SerializeField] private GemUI _gemUI;
+        [SerializeField] private WinLoseUI _winLoseUI;
         
         [Header("Settings")] 
         private GameState _currentGameState;
         private int _gemCount;
+        private int _bonusMultiplier;
         
         #region Unity Methods
 
@@ -58,7 +60,31 @@ namespace Managers
             _currentGameState = newGameState;
             EventManager.OnGameStateChanged?.Invoke(_currentGameState);
             Debug.Log("Current Game State: " + _currentGameState);
+
+            if (newGameState == GameState.Win)
+            {
+                WinState();
+            }
+            else if (newGameState == GameState.Lose)
+            {
+                LoseState();
+            }
         }
-        
+
+        public void CalculateBonusMultiplier(int bonusMultiplier)
+        {
+            _bonusMultiplier = bonusMultiplier;
+            Debug.Log("Bonus: " +_bonusMultiplier);
+        }
+
+        private void WinState()
+        {
+            _winLoseUI.OnGameWin();
+        }
+
+        private void LoseState()
+        {
+            _winLoseUI.OnGameOver();
+        }
     }
 }

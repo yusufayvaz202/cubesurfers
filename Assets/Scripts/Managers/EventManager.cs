@@ -13,6 +13,7 @@ namespace Managers
         
         //Event for game state is changed
         public static Action<GameState> OnGameStateChanged;
+        public static Action OnBonusAreaEntered;
         
         //Event for gem collected
         public static Action OnGemCollected;

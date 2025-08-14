@@ -11,6 +11,7 @@ namespace Player
         [Header("Settings")]
         [SerializeField] private GameObject _lastBlockObject;
         private List<GameObject> _stackObjects = new();
+        private bool _isBonusArea;
 
         #region Unity Methodss
 
@@ -24,12 +25,17 @@ namespace Player
         {
             EventManager.OnIncreaseRaycastHit += IncreaseNewBlock;
             EventManager.OnDecreaseRaycastHit += DecreaseBlock;
+            
+            EventManager.OnBonusAreaEntered += OnBonusAreaEntered;
         }
         
+
         private void OnDisable()
         {
             EventManager.OnIncreaseRaycastHit -= IncreaseNewBlock;
             EventManager.OnDecreaseRaycastHit -= DecreaseBlock;
+
+            EventManager.OnBonusAreaEntered -= OnBonusAreaEntered;
         }
 
         #endregion
@@ -49,14 +55,25 @@ namespace Player
         private void DecreaseBlock(GameObject cube)
         {
             cube.transform.parent = null;
-            
             _stackObjects.Remove(cube);
-            UpdateLastBlockObject();
             
-            if (_stackObjects.Count < 1)
+            UpdateLastBlockObject();
+
+            if (_isBonusArea)
             {
-                // if the stack counter less than 1 you LOSE the game. 
-                GameManager.Instance.ChangeGameState(GameState.Lose);
+                if (_stackObjects.Count < 1)
+                {
+                    // if player in the bonus area you WİN the game.
+                    GameManager.Instance.ChangeGameState(GameState.Win);
+                }
+            }
+            else
+            {
+                if (_stackObjects.Count < 1)
+                {
+                    // if the stack counter less than 1 and is not bonus area you LOSE the game. 
+                    GameManager.Instance.ChangeGameState(GameState.Lose);
+                }
             }
         }
 
@@ -68,6 +85,12 @@ namespace Player
         {
             if (_stackObjects.Count == 0) return;
             _lastBlockObject = _stackObjects[^1];
+        }
+         
+        private void OnBonusAreaEntered()
+        {
+            _isBonusArea = true;
+            GameManager.Instance.CalculateBonusMultiplier(_stackObjects.Count);
         }
 
         #endregion
