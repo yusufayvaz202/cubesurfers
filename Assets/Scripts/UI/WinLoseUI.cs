@@ -55,6 +55,7 @@ namespace UI
 
             _gemMultiplierText.gameObject.SetActive(true);
             _gemMultiplierText.rectTransform.DOMove(_gemCountTextTransform.position, 1f).OnComplete(DestroyGemMultiplierText);
+            
         }
 
         public void SetGemMultiplierText(int multiplier)

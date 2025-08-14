@@ -108,8 +108,9 @@ namespace Player
         {
             while (_isWater)
             {
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForEndOfFrame();
                 DecreaseBlock(_stackObjects[^1]);
+                yield return new WaitForSeconds(1f);
             }
         }
 
