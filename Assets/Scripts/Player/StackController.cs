@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Managers;
@@ -11,7 +12,9 @@ namespace Player
         [Header("Settings")]
         [SerializeField] private GameObject _lastBlockObject;
         private List<GameObject> _stackObjects = new();
+        private Coroutine _waterCoroutine;
         private bool _isBonusArea;
+        private bool _isWater;
 
         #region Unity Methodss
 
@@ -27,6 +30,7 @@ namespace Player
             EventManager.OnDecreaseRaycastHit += DecreaseBlock;
             
             EventManager.OnBonusAreaEntered += OnBonusAreaEntered;
+            EventManager.OnPerformedWater += PerformDecreaseCoroutine;
         }
         
 
@@ -36,6 +40,7 @@ namespace Player
             EventManager.OnDecreaseRaycastHit -= DecreaseBlock;
 
             EventManager.OnBonusAreaEntered -= OnBonusAreaEntered;
+            EventManager.OnPerformedWater -= PerformDecreaseCoroutine;
         }
 
         #endregion
@@ -64,6 +69,7 @@ namespace Player
                 if (_stackObjects.Count < 1)
                 {
                     // if player in the bonus area you WİN the game.
+                    _isWater = false;
                     GameManager.Instance.ChangeGameState(GameState.Win);
                 }
             }
@@ -72,6 +78,7 @@ namespace Player
                 if (_stackObjects.Count < 1)
                 {
                     // if the stack counter less than 1 and is not bonus area you LOSE the game. 
+                    _isWater = false;
                     GameManager.Instance.ChangeGameState(GameState.Lose);
                 }
             }
@@ -91,6 +98,32 @@ namespace Player
         {
             _isBonusArea = true;
             GameManager.Instance.CalculateBonusMultiplier(_stackObjects.Count);
+        }
+
+        #endregion
+        
+        #region Water Obstacle Methods
+
+        private IEnumerator DecreaseCubeCoroutine()
+        {
+            while (_isWater)
+            {
+                yield return new WaitForSeconds(1f);
+                DecreaseBlock(_stackObjects[^1]);
+            }
+        }
+
+        private void PerformDecreaseCoroutine(bool isActive)
+        {
+            _isWater = isActive;
+            if (_isWater)
+            {
+                _waterCoroutine = StartCoroutine(DecreaseCubeCoroutine());
+            }
+            else
+            {
+                StopCoroutine(_waterCoroutine);
+            }
         }
 
         #endregion

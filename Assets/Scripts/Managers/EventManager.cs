@@ -18,5 +18,6 @@ namespace Managers
         
         //Event for gem collected
         public static Action OnGemCollected;
+        public static Action<bool> OnPerformedWater;
     }
 }
