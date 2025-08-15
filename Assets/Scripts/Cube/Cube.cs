@@ -6,16 +6,17 @@ namespace Cube
 {
     public class Cube : MonoBehaviour
     {
-        [Header("References")] private Collider _collider;
+        [Header("References")]
+        private Collider _collider;
 
-        [Header("Cube Properties")] [SerializeField]
-        private bool _isStacked;
-
+        [Header("Cube Properties")] 
+        [SerializeField] private bool _isStacked;
         private Vector3 _rayDirection;
         private float _rayDistance = 0.05f;
         private bool _isHit;
 
-        [Header("Raycast Settings")] private float _rayScale = 1f;
+        [Header("Raycast Settings")] 
+        private float _rayScale = 1f;
         private bool _isPlaying;
         private Vector3 _cubeScale;
         public LayerMask _layerMask;

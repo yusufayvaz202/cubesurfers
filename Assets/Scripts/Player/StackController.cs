@@ -30,7 +30,7 @@ namespace Player
             EventManager.OnDecreaseRaycastHit += DecreaseBlock;
             
             EventManager.OnBonusAreaEntered += OnBonusAreaEntered;
-            EventManager.OnPerformedWater += PerformDecreaseCoroutine;
+            EventManager.OnPerformedWater += OnPerformedWater;
         }
         
 
@@ -40,7 +40,7 @@ namespace Player
             EventManager.OnDecreaseRaycastHit -= DecreaseBlock;
 
             EventManager.OnBonusAreaEntered -= OnBonusAreaEntered;
-            EventManager.OnPerformedWater -= PerformDecreaseCoroutine;
+            EventManager.OnPerformedWater -= OnPerformedWater;
         }
 
         #endregion
@@ -64,22 +64,19 @@ namespace Player
             
             UpdateLastBlockObject();
 
-            if (_isBonusArea)
+            if (_stackObjects.Count < 1)
             {
-                if (_stackObjects.Count < 1)
+                if (_isBonusArea)
                 {
                     // if player in the bonus area you WİN the game.
                     _isWater = false;
                     GameManager.Instance.ChangeGameState(GameState.Win);
                 }
-            }
-            else
-            {
-                if (_stackObjects.Count < 1)
+                else
                 {
                     // if the stack counter less than 1 and is not bonus area you LOSE the game. 
                     _isWater = false;
-                    GameManager.Instance.ChangeGameState(GameState.Lose);
+                    GameManager.Instance.ChangeGameState(GameState.Lose); 
                 }
             }
         }
@@ -114,7 +111,7 @@ namespace Player
             }
         }
 
-        private void PerformDecreaseCoroutine(bool isActive)
+        private void OnPerformedWater(bool isActive)
         {
             _isWater = isActive;
             if (_isWater)
