@@ -6,7 +6,8 @@ namespace Bonus
 {
     public class BonusArea : MonoBehaviour
     {
-        [Header("Settings")] private bool _isBonusStarted;
+        [Header("Settings")] 
+        private bool _isBonusStarted;
 
         #region Unity Methods
 

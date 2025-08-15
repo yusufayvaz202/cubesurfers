@@ -76,7 +76,6 @@ namespace Managers
         {
             _bonusMultiplier = bonusMultiplier;
             _winLoseUI.SetGemMultiplierText(_bonusMultiplier);
-            Debug.Log("Bonus: " +_bonusMultiplier);
         }
 
         public void BonusMultiplierAnimationEnd()

@@ -32,8 +32,8 @@ namespace UI
             _losePopupTransform = _losePopup.GetComponent<RectTransform>();
 
             //TODO: Make Scene Manager
-            _restartButton.onClick.AddListener(() => Debug.Log("Restart"));
-            _nextLevelButton.onClick.AddListener(() => Debug.Log("Next Level"));
+            _restartButton.onClick.AddListener(() => LevelManager.Instance.RestartCurrentScene());
+            _nextLevelButton.onClick.AddListener(() => LevelManager.Instance.LoadNextScene());
         }
 
         public void OnGameOver()
